@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机考研408 · 零基础学习计划</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --border: #334155;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #38bdf8;
+            --green: #4ade80;
+            --orange: #fbbf24;
+            --purple: #c084fc;
+            --red: #f87171;
+            --pink: #f472b6;
+            --teal: #2dd4bf;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+        }
+        .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: 2px; }
+        .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero .subtitle { color: var(--muted); font-size: 1.1rem; margin-top: 12px; }
+        .hero .badge-row { margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .badge {
+            background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 6px 16px; font-size: .85rem; color: var(--accent);
+        }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        section { margin: 48px 0; }
+        h2 {
+            font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        h2 .icon { font-size: 1.4rem; }
+        /* timeline */
+        .timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .phase {
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+            position: relative; transition: transform .2s;
+        }
+        .phase:hover { transform: translateY(-3px); }
+        .phase .num { font-size: 2rem; font-weight: 900; color: var(--accent); opacity: .3; }
+        .phase h3 { font-size: 1rem; margin: 4px 0; }
+        .phase .time { color: var(--muted); font-size: .8rem; }
+        .phase p { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+        /* subject cards */
+        .subjects { display: grid; gap: 20px; }
+        .subject {
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+            border-left: 4px solid var(--accent);
+        }
+        .subject:nth-child(1) { border-left-color: var(--accent); }
+        .subject:nth-child(2) { border-left-color: var(--red); }
+        .subject:nth-child(3) { border-left-color: var(--green); }
+        .subject:nth-child(4) { border-left-color: var(--purple); }
+        .subject .head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .subject h3 { font-size: 1.15rem; }
+        .subject .score { background: var(--border); border-radius: 8px; padding: 2px 10px; font-size: .8rem; color: var(--muted); }
+        .subject .order { margin-top: 12px; }
+        .subject .order li { font-size: .88rem; color: var(--muted); margin: 3px 0; position: relative; padding-left: 18px; list-style: none; }
+        .subject .order li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: .7rem; top: 3px; }
+
+        /* resources */
+        .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .res-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+            transition: transform .2s;
+        }
+        .res-card:hover { transform: translateY(-3px); }
+        .res-card h4 { font-size: 1rem; margin-bottom: 4px; }
+        .res-card .author { color: var(--muted); font-size: .8rem; margin-bottom: 10px; }
+        .res-card .tag { display: inline-block; font-size: .75rem; padding: 2px 8px; border-radius: 6px; margin: 2px 4px 2px 0; }
+        .tag-must { background: #dc262620; color: var(--red); }
+        .tag-extra { background: #7c3aed20; color: var(--purple); }
+        .tag-video { background: #05966920; color: var(--teal); }
+
+        /* links */
+        .link-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .link-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 20px; font-size: .82rem; text-decoration: none;
+            border: 1px solid var(--border); color: var(--accent); background: transparent;
+            transition: all .2s;
+        }
+        .link-btn:hover { background: var(--accent); color: #0f172a; border-color: var(--accent); }
+
+        /* tips */
+        .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .tip {
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+        }
+        .tip .num { font-size: 1.6rem; font-weight: 900; color: var(--orange); opacity: .5; }
+        .tip h4 { font-size: .95rem; margin: 4px 0; }
+        .tip p { color: var(--muted); font-size: .85rem; }
+
+        /* daily */
+        .daily { overflow-x: auto; }
+        .daily table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        .daily th, .daily td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        .daily th { color: var(--accent); font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .daily td { font-size: .9rem; }
+        .daily tr:hover td { background: #ffffff06; }
+
+        .footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 40px 0; border-top: 1px solid var(--border); margin-top: 60px; }
+        .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+        .stat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; text-align: center; }
+        .stat .big { font-size: 1.5rem; font-weight: 800; }
+        .stat .label { font-size: .75rem; color: var(--muted); }
+        .emoji-big { font-size: 1.4rem; }
+
+        /* accordion */
+        .accordion { border: 1px solid var(--border); border-radius: 10px; margin: 8px 0; overflow: hidden; }
+        .accordion summary { padding: 14px 18px; cursor: pointer; font-weight: 600; background: var(--card); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .accordion summary::after { content: "▾"; font-size: .8rem; color: var(--muted); transition: transform .2s; }
+        .accordion[open] summary::after { transform: rotate(180deg); }
+        .accordion .body { padding: 16px 18px; font-size: .9rem; color: var(--muted); }
+
+        @media (max-width: 600px) {
+            .hero { padding: 50px 16px 30px; }
+            .container { padding: 0 12px; }
+            section { margin: 32px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+    <h1>计算机考研<span>408</span> · 零基础学习计划</h1>
+    <p class="subtitle">数据结构 45′ · 计算机组成原理 45′ · 操作系统 35′ · 计算机网络 25′ &nbsp;|&nbsp; 满分 150</p>
+    <div class="badge-row">
+        <span class="badge">📅 建议备考周期 10-12 个月</span>
+        <span class="badge">⏱ 每天 3-4h 专业课</span>
+        <span class="badge">📝 2009-2025 真题为核心</span>
+    </div>
+</header>
+
+<div class="container">
+
+<!-- ==================== 四阶段时间线 ==================== -->
+<section>
+    <h2><span class="icon">📋</span>总体时间规划</h2>
+    <div class="timeline">
+        <div class="phase">
+            <div class="num">01</div>
+            <h3>基础入门</h3>
+            <div class="time">第 1-2 个月</div>
+            <p>C语言入门 + 四科概览扫盲，建立计算机基本思维</p>
+        </div>
+        <div class="phase">
+            <div class="num">02</div>
+            <h3>一轮精学</h3>
+            <div class="time">第 3-6 个月</div>
+            <p>教材 + 网课逐章精学，完成课后习题，做好笔记</p>
+        </div>
+        <div class="phase">
+            <div class="num">03</div>
+            <h3>二轮强化</h3>
+            <div class="time">第 7-8 个月</div>
+            <p>王道/天勤刷题，专题突破，攻克综合应用题大题</p>
+        </div>
+        <div class="phase">
+            <div class="num">04</div>
+            <h3>三轮真题 + 冲刺</h3>
+            <div class="time">第 9-12 个月</div>
+            <p>近15年真题2-3遍，模拟卷查漏补缺，背诵记忆</p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 分科路线 ==================== -->
+<section>
+    <h2><span class="icon">📘</span>四科学习路线</h2>
+    <div class="subjects">
+
+        <!-- DS -->
+        <div class="subject">
+            <div class="head">
+                <h3>📐 数据结构</h3>
+                <span class="score">45 分 · 建议最先学</span>
+            </div>
+            <p style="color:var(--muted);font-size:.85rem;margin:8px 0;">核心：<strong style="color:var(--accent)">算法思想 &gt; 代码默写</strong>，408 不考完整代码，考算法思维</p>
+            <div class="stat-row" style="margin:12px 0;">
+                <div class="stat"><div class="big" style="color:var(--accent)">13周</div><div class="label">建议学时</div></div>
+                <div class="stat"><div class="big" style="color:var(--green)">1st</div><div class="label">推荐顺序</div></div>
+            </div>
+            <details class="accordion">
+                <summary>📋 学习顺序（点击展开）</summary>
+                <div class="body">
+                    <ol>
+                        <li>C语言基础复习（指针、结构体、malloc）— 1周</li>
+                        <li>线性表（顺序表 → 链表）— 2周</li>
+                        <li>栈和队列 — 1周</li>
+                        <li><strong>树与二叉树</strong>（重中之重，遍历算法必须手写）— 3周</li>
+                        <li>图（存储、遍历、最小生成树、最短路径）— 2周</li>
+                        <li>查找（二分、B树/B+树、散列表）— 2周</li>
+                        <li>排序（所有排序算法对比，内部排序必考）— 2周</li>
+                    </ol>
+                </div>
+            </details>
+        </div>
+
+        <!-- CO -->
+        <div class="subject">
+            <div class="head">
+                <h3>💾 计算机组成原理</h3>
+                <span class="score">45 分 · 最难的一科</span>
+            </div>
+            <p style="color:var(--muted);font-size:.85rem;margin:8px 0;">核心：<strong style="color:var(--red)">数据通路 + 指令执行流程</strong>，从单周期CPU理解起</p>
+            <div class="stat-row" style="margin:12px 0;">
+                <div class="stat"><div class="big" style="color:var(--red)">12周</div><div class="label">建议学时</div></div>
+                <div class="stat"><div class="big" style="color:var(--orange)">2nd</div><div class="label">推荐顺序</div></div>
+            </div>
+            <details class="accordion">
+                <summary>📋 学习顺序（点击展开）</summary>
+                <div class="body">
+                    <ol>
+                        <li>计算机系统概述 — 0.5周</li>
+                        <li>数据的表示和运算（原码补码、IEEE754浮点数）— 2周</li>
+                        <li>存储系统（Cache映射、虚拟内存）— 3周</li>
+                        <li>指令系统（寻址方式、CISC vs RISC）— 2周</li>
+                        <li><strong>中央处理器CPU</strong>（数据通路、流水线、冒险）— 3周</li>
+                        <li>总线 — 0.5周</li>
+                        <li>I/O系统（程序查询、中断、DMA）— 1周</li>
+                    </ol>
+                </div>
+            </details>
+        </div>
+
+        <!-- OS -->
+        <div class="subject">
+            <div class="head">
+                <h3>🖥 操作系统</h3>
+                <span class="score">35 分 · 理解"为什么"</span>
+            </div>
+            <p style="color:var(--muted);font-size:.85rem;margin:8px 0;">核心：<strong style="color:var(--green)">进程管理 + 内存管理</strong>，PV操作是永恒考点</p>
+            <div class="stat-row" style="margin:12px 0;">
+                <div class="stat"><div class="big" style="color:var(--green)">9周</div><div class="label">建议学时</div></div>
+                <div class="stat"><div class="big" style="color:var(--purple)">3rd</div><div class="label">推荐顺序</div></div>
+            </div>
+            <details class="accordion">
+                <summary>📋 学习顺序（点击展开）</summary>
+                <div class="body">
+                    <ol>
+                        <li>操作系统概述 — 0.5周</li>
+                        <li><strong>进程管理</strong>（进程状态转换、同步互斥、死锁）— 3周</li>
+                        <li><strong>内存管理</strong>（分页、分段、虚拟内存、页面置换）— 3周</li>
+                        <li>文件管理（文件系统结构、空闲空间管理）— 1.5周</li>
+                        <li>I/O管理（磁盘调度算法）— 1周</li>
+                    </ol>
+                </div>
+            </details>
+        </div>
+
+        <!-- CN -->
+        <div class="subject">
+            <div class="head">
+                <h3>🌐 计算机网络</h3>
+                <span class="score">25 分 · 性价比最高</span>
+            </div>
+            <p style="color:var(--muted);font-size:.85rem;margin:8px 0;">核心：<strong style="color:var(--purple)">分层思想 + 各层协议</strong>，记忆量大但理解不难</p>
+            <div class="stat-row" style="margin:12px 0;">
+                <div class="stat"><div class="big" style="color:var(--purple)">8周</div><div class="label">建议学时</div></div>
+                <div class="stat"><div class="big" style="color:var(--pink)">4th</div><div class="label">推荐顺序</div></div>
+            </div>
+            <details class="accordion">
+                <summary>📋 学习顺序（点击展开）</summary>
+                <div class="body">
+                    <ol>
+                        <li>体系结构（OSI/TCP-IP模型）— 0.5周</li>
+                        <li>物理层（奈氏准则、香农定理）— 0.5周</li>
+                        <li>数据链路层（CSMA/CD、MAC帧、交换机）— 1.5周</li>
+                        <li>网络层（IP、子网划分、路由协议、NAT）— 2周</li>
+                        <li><strong>传输层</strong>（TCP三次握手/四次挥手、拥塞控制）— 2周</li>
+                        <li>应用层（HTTP、DNS、FTP、SMTP）— 1.5周</li>
+                    </ol>
+                </div>
+            </details>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==================== 推荐资料 ==================== -->
+<section>
+    <h2><span class="icon">📚</span>必备资料与资源</h2>
+
+    <h3 style="font-size:1rem;margin-bottom:14px;color:var(--muted);">📖 官方指定教材</h3>
+    <div class="res-grid">
+        <div class="res-card">
+            <h4>数据结构（C语言版）</h4>
+            <div class="author">严蔚敏 · 清华大学出版社</div>
+            <span class="tag tag-must">必买</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=数据结构+C语言版+严蔚敏" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+                <a href="https://www.dangdang.com/search?key=数据结构+C语言版+严蔚敏" target="_blank" rel="noopener" class="link-btn">🔗 当当</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>计算机组成原理（第2版）</h4>
+            <div class="author">唐朔飞 · 高等教育出版社</div>
+            <span class="tag tag-must">必买</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=计算机组成原理+唐朔飞" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+                <a href="https://www.dangdang.com/search?key=计算机组成原理+唐朔飞" target="_blank" rel="noopener" class="link-btn">🔗 当当</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>计算机操作系统（第4版）</h4>
+            <div class="author">汤小丹 · 西安电子科技大学出版社</div>
+            <span class="tag tag-must">必买</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=计算机操作系统+汤小丹" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+                <a href="https://www.dangdang.com/search?key=计算机操作系统+汤小丹" target="_blank" rel="noopener" class="link-btn">🔗 当当</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>计算机网络（第8版）</h4>
+            <div class="author">谢希仁 · 电子工业出版社</div>
+            <span class="tag tag-must">必买</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=计算机网络+谢希仁" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+                <a href="https://www.dangdang.com/search?key=计算机网络+谢希仁" target="_blank" rel="noopener" class="link-btn">🔗 当当</a>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="font-size:1rem;margin:28px 0 14px;color:var(--muted);">📝 考研辅导书（核心刷题资料）</h3>
+    <div class="res-grid">
+        <div class="res-card">
+            <h4>王道考研复习指导 · 4本套装</h4>
+            <div class="author">王道论坛 · 电子工业出版社</div>
+            <span class="tag tag-must">人手一套</span>
+            <span class="tag tag-extra">核心资料</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=王道考研408复习指导" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+                <a href="https://search.jd.com/Search?keyword=王道考研408历年真题" target="_blank" rel="noopener" class="link-btn">🔗 真题卷</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>天勤计算机考研高分笔记 · 4本</h4>
+            <div class="author">率辉 · 机械工业出版社</div>
+            <span class="tag tag-extra">零基础友好</span>
+            <span class="tag tag-extra">可作为补充</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=天勤计算机考研高分笔记" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+                <a href="https://www.dangdang.com/search?key=天勤计算机考研高分笔记" target="_blank" rel="noopener" class="link-btn">🔗 当当</a>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="font-size:1rem;margin:28px 0 14px;color:var(--muted);">🎬 网课 & 在线资源</h3>
+    <div class="res-grid">
+        <div class="res-card">
+            <h4>王道考研 · 408全程班</h4>
+            <div class="author">王道论坛出品</div>
+            <span class="tag tag-video">配套指导书</span>
+            <span class="tag tag-must">强烈推荐</span>
+            <div class="link-row">
+                <a href="https://space.bilibili.com/505174926" target="_blank" rel="noopener" class="link-btn">🎬 B站</a>
+                <a href="https://www.cctalk.com/" target="_blank" rel="noopener" class="link-btn">🔗 CCtalk</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>天勤考研 · 408网课</h4>
+            <div class="author">率辉团队</div>
+            <span class="tag tag-video">零基础友好</span>
+            <span class="tag tag-extra">讲解细致</span>
+            <div class="link-row">
+                <a href="https://space.bilibili.com/" target="_blank" rel="noopener" class="link-btn">🎬 B站搜索</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>计算机组成原理 · 科普入门</h4>
+            <div class="author">B站科普UP主（零基础先看）</div>
+            <span class="tag tag-video">建立直觉</span>
+            <span class="tag tag-extra">学计组前必看</span>
+            <div class="link-row">
+                <a href="https://search.bilibili.com/all?keyword=计算机组成原理 入门" target="_blank" rel="noopener" class="link-btn">🎬 B站搜索</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>C语言入门 · 翁恺</h4>
+            <div class="author">浙江大学 · 中国大学MOOC</div>
+            <span class="tag tag-video">零基础必修</span>
+            <span class="tag tag-must">学DS前先学</span>
+            <div class="link-row">
+                <a href="https://www.icourse163.org/course/ZJU-9001" target="_blank" rel="noopener" class="link-btn">🎬 中国大学MOOC</a>
+                <a href="https://search.bilibili.com/all?keyword=翁恺C语言" target="_blank" rel="noopener" class="link-btn">🎬 B站</a>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="font-size:1rem;margin:28px 0 14px;color:var(--muted);">🛠 刷题 & 工具</h3>
+    <div class="res-grid">
+        <div class="res-card">
+            <h4>王道 · 408历年真题解析</h4>
+            <div class="author">2009-2025 真题 + 详细解析</div>
+            <span class="tag tag-must">刷2-3遍</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=王道考研408历年真题" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>王道考研 · 核心考点模拟题</h4>
+            <div class="author">考前冲刺模拟卷</div>
+            <span class="tag tag-extra">冲刺用</span>
+            <div class="link-row">
+                <a href="https://search.jd.com/Search?keyword=王道考研408模拟题" target="_blank" rel="noopener" class="link-btn">🔗 京东</a>
+            </div>
+        </div>
+        <div class="res-card">
+            <h4>LeetCode · 数据结构练习</h4>
+            <div class="author">在线编程平台</div>
+            <span class="tag tag-video">算法手感</span>
+            <span class="tag tag-extra">选做</span>
+            <div class="link-row">
+                <a href="https://leetcode.cn/" target="_blank" rel="noopener" class="link-btn">🔗 LeetCode.cn</a>
+                <a href="https://leetcode.com/" target="_blank" rel="noopener" class="link-btn">🔗 LeetCode</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 每日安排 ==================== -->
+<section>
+    <h2><span class="icon">⏰</span>每日时间安排（参考）</h2>
+    <div class="daily">
+        <table>
+            <thead>
+                <tr><th>时间段</th><th>时长</th><th>内容</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>🌅 上午</td><td>3h</td><td>数学（408之外的独立大课，每天必学）</td></tr>
+                <tr><td>☀️ 下午</td><td>3h</td><td><strong>408专业课</strong>（跟网课 + 做笔记 + 理解概念）</td></tr>
+                <tr><td>🌙 晚上</td><td>2h</td><td>课后习题 + 回顾当天内容 + 错题整理</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="color:var(--muted);font-size:.85rem;margin-top:12px;">⚠️ 408 每天至少保证 <strong style="color:var(--accent)">3-4 小时</strong>，零基础需要更多时间消化吸收。</p>
+</section>
+
+<!-- ==================== 关键建议 ==================== -->
+<section>
+    <h2><span class="icon">💡</span>给零基础同学的 7 条关键建议</h2>
+    <div class="tips">
+        <div class="tip">
+            <div class="num">01</div>
+            <h4>不要跳过C语言</h4>
+            <p>没有C语言基础直接学数据结构会很痛苦，指针和内存概念绕不过去。推荐翁恺老师的C语言MOOC课程。</p>
+        </div>
+        <div class="tip">
+            <div class="num">02</div>
+            <h4>先学数据结构，再学计组</h4>
+            <p>数据结构建立算法思维，计组建立硬件思维，两者在操作系统中交汇（如虚拟内存）。</p>
+        </div>
+        <div class="tip">
+            <div class="num">03</div>
+            <h4>第一遍别追求全懂</h4>
+            <p>408知识体系庞大，第一遍能听懂60%就很不错了。二轮复习时各科知识会开始"连通"。</p>
+        </div>
+        <div class="tip">
+            <div class="num">04</div>
+            <h4>多画图，少死记</h4>
+            <p>CPU数据通路、进程状态转换、TCP状态机、树的遍历过程——画图比背书有效100倍。</p>
+        </div>
+        <div class="tip">
+            <div class="num">05</div>
+            <h4>真题是最好的老师</h4>
+            <p>近15年真题（2009-2025）至少做2-3遍，摸透命题规律。王道书上的真题标注要重点做。</p>
+        </div>
+        <div class="tip">
+            <div class="num">06</div>
+            <h4>大题专项突破</h4>
+            <p>综合应用题约70分有固定题型：DS算法设计、计组数据通路+Cache、OS的PV操作+页面置换、计网TCP+子网划分。</p>
+        </div>
+        <div class="tip">
+            <div class="num">07</div>
+            <h4>组建学习小组或加考研群</h4>
+            <p>不会的问题及时问，不要自己闷头想太久。王道和天勤都有官方考研交流群。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 大题速查 ==================== -->
+<section>
+    <h2><span class="icon">🎯</span>408 综合应用题·高频考点速查</h2>
+    <div class="res-grid">
+        <div class="res-card">
+            <h4>📐 数据结构</h4>
+            <ul class="order">
+                <li>二叉树遍历（递归 ↔ 非递归）</li>
+                <li>链表操作（逆置、合并）</li>
+                <li>图的最短路径（Dijkstra）</li>
+                <li>散列表查找（冲突处理）</li>
+                <li>排序算法比较与手写</li>
+            </ul>
+        </div>
+        <div class="res-card">
+            <h4>💾 组成原理</h4>
+            <ul class="order">
+                <li>Cache-主存地址映射</li>
+                <li>数据通路分析（单周期）</li>
+                <li>流水线冒险与性能计算</li>
+                <li>IEEE 754 浮点数加减</li>
+                <li>指令格式与寻址方式</li>
+            </ul>
+        </div>
+        <div class="res-card">
+            <h4>🖥 操作系统</h4>
+            <ul class="order">
+                <li>PV 操作 / 读者-写者问题</li>
+                <li>死锁判断 + 银行家算法</li>
+                <li>分页地址变换 & TLB</li>
+                <li>页面置换算法（LRU/CLOCK）</li>
+                <li>磁盘调度（SSTF/SCAN）</li>
+            </ul>
+        </div>
+        <div class="res-card">
+            <h4>🌐 计算机网络</h4>
+            <ul class="order">
+                <li>TCP 拥塞控制（慢开始/快恢复）</li>
+                <li>子网划分 & CIDR 计算</li>
+                <li>TCP 三次握手 / 四次挥手</li>
+                <li>HTTP 协议报文分析</li>
+                <li>CSMA/CD & 交换机转发</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+</div>
+
+<footer class="footer">
+    <p>📌 计算机考研408 · 零基础学习计划 &nbsp;|&nbsp; 王道 + 天勤 + 官方教材 + 真题 &nbsp;|&nbsp; 坚持就是胜利 🎓</p>
+</footer>
+
+</body>
+</html>
